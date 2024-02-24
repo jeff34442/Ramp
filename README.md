@@ -38,3 +38,11 @@ Correction: Change the data type of the transaction_amount to 'TEXT' as values c
 ### 3. Column Name Syntax In Insert
 Bug: Column names were enclosed in double quotes in insert, which is unnecessary. 
 Correction: Double quotes around column names were removed. 
+
+
+## Solution:
+
+### Key Notes:
+1. As the transaction_time column in the transactions table is of datatype "TIMESTAMP", it can be observed that there are multiple entries per day. If the data is not grouped by day, the rolling average calculation will result in multiple row outputs for 01/31/2021. In the solution, the transaction_time is converted to a date and the total transaction amount per day is calculated. This aggregation is stored within "transaction_convert".
+2. The transaction_convert aggregation is then used to calculate the rolling average over the values from the preceding days.
+3. Finally filter the aggregation "rolling_avg" to 01/31/2021 to get the desired output. 
